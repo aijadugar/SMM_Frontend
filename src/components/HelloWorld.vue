@@ -8,17 +8,21 @@ const userInput = ref('')
 const generatedLink = ref('')
 const loading = ref(false)
 
+const BASE_URL = import.meta.env.DEV
+  ? 'http://127.0.0.1:5000'
+  : 'https://smm-backend-wljg.onrender.com'
+
 const submitText = async () => {
   loading.value = true
   generatedLink.value = ''
   try {
-    const response = await axios.post('https://smm-backend-wljg.onrender.com/generate-link', {
+    const response = await axios.post(`${BASE_URL}/generate-link`, {
       text: userInput.value
     })
     generatedLink.value = response.data.link
   } catch (error) {
     console.error('Error:', error)
-    generatedLink.value = 'Something went wrong!'
+    generatedLink.value = 'Something went wrong...!'
   } finally {
     loading.value = false
   }

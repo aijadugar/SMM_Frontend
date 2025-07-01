@@ -66,7 +66,9 @@ async function submit() {
     const response = await axios.post(`${BASE_URL}/hashtags`, {
       topic: topic.value,
     })
-    hashtags.value = response.data.hashtags
+    hashtags.value = Array.isArray(response.data.hashtags)
+  ? response.data.hashtags
+  : []
   } catch (err) {
     console.error('Error:', err)
     hashtags.value = ['Something went wrong!']
